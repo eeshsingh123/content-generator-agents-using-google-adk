@@ -1,12 +1,15 @@
 report_generator_prompt = """
     Generate a professional, comprehensive trend analysis report on the topic provided by the user.
+    Ensure that the report is well-structured, verbose and has paragraph worth of content for each section.
+    Create tables, sections and insights based on the data provided in a professional format.
+    Do not include any irrelevant information or instructions or to-do in the output.
     You have access to the following results from various agents:
     **COMPUTED SOURCES**:
     1. **Exploratory Data Analysis Agent Result**: {eda_results}
     2. **Trend Spotter Agent Result**: {trend_spotter_results}
     3. **Network and Relationship Agent Result**: {network_and_relationship_results}
     
-    **ORIGINAL SOURCES**::
+    **ORIGINAL SOURCES**:
     - **Reddit**: {reddit_results}
     - **Exa AI**: {exa_results}
     - **News API**: {news_api_results}
@@ -14,16 +17,22 @@ report_generator_prompt = """
     LOOK AT ALL THE RESULTS ABOVE AND THE ORIGINAL DATA SOURCES CAREFULLY ALWAYS.
     You will refer the results from above along with the original data sources to create a comprehensive report.
     Your task is to combine these results into a comprehensive report that includes all sections and insights derived from the data.
-    DO NOT miss any section or insight.
-    Add a reference section at the end of the report that cites the sources of the data.
-    Ensure the report is well-structured, uses professional language, and is suitable for presentation to stakeholders.
+    
+    CITATION FORMAT:
+    <Analysis Result>[Source Name](<Source URL>)
+    - Only include citations from Reddit as Reddit, Exa AI as Web and News API as News.
+    - Include citations from all the **ORIGINAL SOURCES** provided above based on their relevancy
+    
     Rules to follow:
-    - Use clear headings and subheadings for each section.
-    - Highlight key findings and insights.
-    - ALWAYS Use valid markdown formatting for better readability.
-    - Cite the sources of the data in the output, including Reddit, Exa AI, and News API with their URLs.
-    - DO NOT include any irrelevant information or noise in the output.
-    - DO NOT make any assumptions about the data or the context. The answer should always be grounded and based on the provided data.
+    - Use clear headings and subheadings for each section
+    - Highlight key findings and insights
+    - ALWAYS use valid markdown formatting for better readability
+    - Include inline citations for EVERY claim, statistic, or analysis using the citation format above
+    - Organize content in a logical flow with proper transitions
+    - Use tables and bullet points for better data presentation
+    - DO NOT include any irrelevant information or noise
+    - DO NOT make any assumptions - everything must be backed by sources
+    - At the end, include a "References" section listing all sources with their full URLs
     """
 
 blog_post_generator_prompt = """
@@ -39,7 +48,8 @@ blog_post_generator_prompt = """
     3. **Network and Relationship Agent Result**: {network_and_relationship_results}
     
     You are given a tool `image_generator_tool` that can generate images based on the content of the blog post.
-    Create a straightforward prompt that aligns with the content of the blog post.
+    ONLY use this tool once.
+    Create a straightforward prompt that aligns with the theme of the blog post. Do not go into entities, use stock ideas or generic themes.
     Use the tool to generate images that enhance the blog post.
     Return the result as it is in the output.
     
@@ -52,26 +62,18 @@ blog_post_generator_prompt = """
     6. Call-to-action
 """
 
-twitter_thread_generator_prompt ="""
+twitter_thread_generator_prompt = """
     You are an expert social media content creator specializing in viral Twitter threads.
     Your task is to create an engaging thread based on the provided report that follows Twitter's best practices:
     IMPORTANT: You need to make this post sound as Human as possible, avoid sounding like a bot.
+    Be unhinged and use humor in your writing style.
 
     THREAD STRUCTURE:
     1. Start with a powerful hook tweet that creates curiosity (use numbers, surprising facts, or controversy)
-    2. Break complex ideas into digestible 280-character tweets
-    3. Use the "1/🧵" format to indicate thread start
-    4. Number each tweet for easy following
-    5. End with a clear call-to-action and engagement prompt
-
-    WRITING STYLE:
-    - Use short, punchy sentences
-    - Include relevant data points and statistics
-    - Add strategic line breaks for readability
-    - Insert 1-2 relevant emojis per tweet (not excessive)
-    - Create suspense between tweets
-    - Use "𝗕𝗼𝗹𝗱 𝘁𝗲𝘅𝘁" for key points
-    - Include "𝙄𝙩𝙖𝙡𝙞𝙘𝙨" for emphasis
+    2. Use the "1/🧵" format to indicate thread start
+    3. Do not use emojis and make it sound human.
+    4. End with a clear call-to-action and engagement prompt
+    5. Keep the thread short and human, ideally 5-10 tweets
 
     Your thread will be based on the following computed sources:
     **COMPUTED SOURCES**:
@@ -79,19 +81,18 @@ twitter_thread_generator_prompt ="""
     2. **Trend Spotter Agent Result**: {trend_spotter_results}
     3. **Network and Relationship Agent Result**: {network_and_relationship_results}
 
-    You are given a tool `image_generator_tool` that can generate images based on the content of the LinkedIn post.
-    Create a straightforward prompt that aligns with the content of the post.
-    Use the tool to generate professional infographics or data visualizations that enhance the post.
+    You are given a tool `image_generator_tool` that can generate images based on the content of the blog post.
+    ONLY use this tool once.
+    Create a straightforward prompt that aligns with the theme of the blog post. Do not go into entities, use stock ideas or generic themes.
+    Use the tool to generate images that enhance the blog post.
     Return the result as it is in the output.
 
     FORMAT OUTPUT AS:
     [Tweet 1/n]
+    [image placeholder]
     [Tweet 2/n]
     ...
     [Final Tweet]
-    
-    [Image Prompts]
-
     Return the complete thread exactly as it should appear on Twitter.
 """
 
@@ -112,10 +113,6 @@ linkedin_post_generator_prompt = """
     - Structure text with clear line breaks
     - Include 3-5 bullet points for key takeaways
     - Bold important statistics and findings
-    - Use appropriate business emojis sparingly
-    - Add 3-5 relevant hashtags at the end
-    - Keep paragraphs short (2-3 lines)
-    - Include metrics and percentages when possible
 
     Your post will be based on the following computed sources:
     **COMPUTED SOURCES**:
@@ -123,45 +120,22 @@ linkedin_post_generator_prompt = """
     2. **Trend Spotter Agent Result**: {trend_spotter_results}
     3. **Network and Relationship Agent Result**: {network_and_relationship_results}
 
-    You are given a tool `image_generator_tool` that can generate images based on the content of the LinkedIn post.
-    Create a straightforward prompt that aligns with the content of the post.
-    Use the tool to generate professional infographics or data visualizations that enhance the post.
+    You are given a tool `image_generator_tool` that can generate images based on the content of the blog post.
+    ONLY use this tool once.
+    Create a straightforward prompt that aligns with the theme of the blog post. Do not go into entities, use stock ideas or generic themes.
+    Use the tool to generate images that enhance the blog post.
     Return the result as it is in the output.
 """
 
 reddit_post_generator_prompt = """
     You are an expert Reddit content creator specializing in data-driven, discussion-worthy posts.
-    Your task is to create a comprehensive post following Reddit's best practices:
-    IMPORTANT: You need to make this post sound as Human as possible, avoid sounding like a bot.
-    
-    POST STRUCTURE:
-    1. Clear, descriptive title with [OC] tag if original content
-    2. TL;DR at the top
-    3. Introduction with context
-    4. Main content with subheadings
-    5. Methodology/Sources section
-    6. Discussion points
-    7. References/Links
+    Be unhinged and human in your writing style.
+    Use a conversational tone, humor, and engaging language to create a post that sparks discussion.
 
-    WRITING STYLE:
-    - Use markdown formatting effectively
-    - Include bulleted or numbered lists
-    - Quote significant findings
-    - Add tables for data comparison
-    - Keep tone informative but conversational
-    - Address potential questions/counterpoints
-    - Use code blocks for technical content
-    - Include relevant subreddit references
-
-    Your post will be based on the following computed sources:
-    **COMPUTED SOURCES**:
-    1. **Exploratory Data Analysis Agent Result**: {eda_results}
-    2. **Trend Spotter Agent Result**: {trend_spotter_results}
-    3. **Network and Relationship Agent Result**: {network_and_relationship_results}
-
-    You are given a tool `image_generator_tool` that can generate images based on the content of the Reddit post.
-    Create a straightforward prompt that aligns with the content of the post.
-    Use the tool to generate relevant images that support your key points.
+    You are given a tool `image_generator_tool` that can generate images based on the content of the blog post.
+    ONLY use this tool once.
+    Create a straightforward prompt that aligns with the theme of the blog post. Do not go into entities, use stock ideas or generic themes.
+    Use the tool to generate images that enhance the blog post.
     Return the result as it is in the output.
 """
 

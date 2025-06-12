@@ -7,7 +7,7 @@ eda_prompt = """
         **Data Sources**
         - **Reddit**:
             {reddit_results}
-        - **Exa AI** (Note that exa ai results contain news, tweets, and research papers):
+        - **Exa AI** (Note that exa ai results contain news, tweets, and LinkedIn posts):
             {exa_results}
         - **News API**:
             {news_api_results}
@@ -37,10 +37,7 @@ eda_prompt = """
         Ensure that the analysis is comprehensive, insightful, and provides a clear understanding of the data.
         Do not include any irrelevant information or noise in the output.
         Do not make any assumptions about the data or the context. The answer should always be grounded and based on the provided data.
-        Cite the sources of the data in the output, including Reddit, Exa AI, and News API.
-        Cite the sources in the following format:
-        - <Analysis>: [1](News_API_source_url)[2](Exa_AI_source_url)[3](Reddit_source_url)
-        - <Analysis>: [1](Exa_AI_source_url)
+        Cite the sources next to the data in the output, including Reddit, (Twitter, News from Exa AI), and News API with their URLs.
     """
 
 trend_spotting_prompt = """
@@ -49,7 +46,7 @@ trend_spotting_prompt = """
         Here are the data sources:
         - **Reddit**: 
             {reddit_results}
-        - **Exa AI** (Note that exa ai results contain news, tweets, and research papers): 
+        - **Exa AI** (Note that exa ai results contain news, tweets, and LinkedIn posts):
             {exa_results}
         - **News API**: 
             {news_api_results}
@@ -79,7 +76,7 @@ network_and_relationship_prompt = """
         You also have access to the following data sources:
         - **Reddit**:
             {reddit_results}
-        - **Exa AI** (Note that exa ai results contain news, tweets, and research papers):
+        - **Exa AI** (Note that exa ai results contain news, tweets, and LinkedIn posts):
             {exa_results}
         - **News API**:
             {news_api_results}
@@ -87,7 +84,7 @@ network_and_relationship_prompt = """
         You task is to do the following:
         - Co-occurrence Analysis: Identify entities or keywords that frequently appear together using network analysis
         - Cross-Source Patterns: Compare patterns across sources (e.g., do news articles and Reddit posts discuss the same entities?)
-        - Relationship Mapping: Create a network graph showing relationships between entities, keywords, and topics.
+        - Relationship Mapping: Create a network graph as a table showing relationships between entities, keywords, and topics.
         - Sentiment Correlation: Analyze how sentiment varies across different sources and topics.
         - Topic Evolution: Track how topics and entities evolve over time across different sources.
         Ensure that the analysis is comprehensive, insightful, and provides a clear understanding of the relationships in the data.

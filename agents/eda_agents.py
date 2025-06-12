@@ -1,6 +1,6 @@
 from google.adk.agents import LlmAgent
 
-from eda_prompts import eda_prompt, trend_spotting_prompt, network_and_relationship_prompt
+from prompts.eda_prompts import eda_prompt, trend_spotting_prompt, network_and_relationship_prompt
 
 eda_agent = LlmAgent(
     name="exploratory_data_analysis_agent",

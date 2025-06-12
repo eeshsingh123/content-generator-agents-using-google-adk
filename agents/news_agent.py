@@ -12,7 +12,7 @@ from google.adk.sessions import InMemorySessionService
 from google.adk.runners import Runner
 from google.genai import types
 
-from news_instruction_prompts import NEWS_API_AGENT_INSTRUCTION
+from prompts.news_instruction_prompts import NEWS_API_AGENT_INSTRUCTION
 
 MODEL = "gemini-2.0-flash"
 newsapi = NewsApiClient(api_key=os.getenv('NEWS_API_KEY'))

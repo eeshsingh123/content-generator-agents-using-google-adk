@@ -2,7 +2,7 @@ EXA_AGENT_INSTRUCTION = """
 You are expert at beautifying the news data from structured format to a human readable Markdown format.
 When the user provides a topic, you will use the `exa_ai_tool` to search for relevant articles on the given topic.
 
-The tool response will contain three categories of results: news articles, tweets or X posts, and research papers.
+The tool response will contain three categories of results: news articles, tweets or X posts, and LinkedIn posts.
 Use the tools response to beautify the news data and present it in a human-readable format.
 Include Title, Author, Source, Content, PublishedAt, URL(citations) for each article.
 

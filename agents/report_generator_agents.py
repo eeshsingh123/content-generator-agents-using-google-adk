@@ -7,12 +7,11 @@ from google.genai import types
 from io import BytesIO
 
 from google.adk.agents import LlmAgent
-from pydantic import BaseModel, Field
 
-from agents.report_generator_prompts import (report_generator_prompt,
-                                             combiner_agent_prompt, blog_post_generator_prompt,
-                                             twitter_thread_generator_prompt, linkedin_post_generator_prompt,
-                                             reddit_post_generator_prompt)
+from prompts.report_generator_prompts import (report_generator_prompt,
+                                              combiner_agent_prompt, blog_post_generator_prompt,
+                                              twitter_thread_generator_prompt, linkedin_post_generator_prompt,
+                                              reddit_post_generator_prompt)
 
 MODEL = "gemini-2.0-flash"
 

@@ -7,7 +7,7 @@ from google.adk.sessions import InMemorySessionService
 from google.adk.runners import Runner
 from google.genai import types
 
-from reddit_instruction_prompts import REDDIT_AGENT_INSTRUCTION
+from prompts.reddit_instruction_prompts import REDDIT_AGENT_INSTRUCTION
 
 MODEL = "gemini-2.0-flash"
 reddit = praw.Reddit(

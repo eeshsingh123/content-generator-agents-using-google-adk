@@ -8,7 +8,7 @@ from google.adk.sessions import InMemorySessionService
 from google.adk.runners import Runner
 from google.genai import types
 
-from exa_instruction_prompts import EXA_AGENT_INSTRUCTION
+from prompts.exa_instruction_prompts import EXA_AGENT_INSTRUCTION
 
 MODEL = "gemini-2.0-flash"
 exa = Exa(os.getenv('EXA_API_KEY'))
@@ -42,16 +42,15 @@ def exa_ai_tool(topic: str):
         category="tweet"
     )
 
-    research_paper_results = exa.search_and_contents(
+    linkedin_results = exa.search_and_contents(
         topic,
-        num_results=2,
-        include_domains=["https://arxiv.org", "https://researchgate.net"],
-        category="research paper",
+        num_results=5,
+        include_domains=["https://www.linkedin.com/"],
     )
 
     combined_result["news"] = result.results
     combined_result["twitter"] = twitter_results.results
-    combined_result["research_paper"] = research_paper_results.results
+    combined_result["linkedin"] = linkedin_results.results
     return combined_result
 
 
