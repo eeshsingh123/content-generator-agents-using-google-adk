@@ -79,7 +79,6 @@ linkedin_post_generator_agent = LlmAgent(
     model=MODEL,
     instruction=linkedin_post_generator_prompt,
     description="An agent designed to generate a LinkedIn post summarizing the key findings from the report.",
-    tools=[image_generator_tool],
     output_key="linkedin_post",
 )
 
@@ -88,7 +87,6 @@ reddit_post_generator_agent = LlmAgent(
     model=MODEL,
     instruction=reddit_post_generator_prompt,
     description="An agent designed to generate a Reddit post summarizing the key findings from the report.",
-    tools=[image_generator_tool],
     output_key="reddit_post",
 )
 

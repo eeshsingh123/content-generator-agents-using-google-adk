@@ -12,6 +12,7 @@ from prompts.exa_instruction_prompts import EXA_AGENT_INSTRUCTION
 
 MODEL = "gemini-2.0-flash"
 exa = Exa(os.getenv('EXA_API_KEY'))
+SEARCH_RESULTS_COUNT = 10
 
 
 def exa_ai_tool(topic: str):
@@ -29,14 +30,14 @@ def exa_ai_tool(topic: str):
     one_month_ago_as_str = (datetime.datetime.now() - datetime.timedelta(days=30)).strftime('%Y-%m-%dT%H:%M:%S.%fZ')
     result = exa.search_and_contents(
         topic,
-        num_results=5,
+        num_results=SEARCH_RESULTS_COUNT,
         start_crawl_date=one_month_ago_as_str,
         category="news"
     )
 
     twitter_results = exa.search_and_contents(
         topic,
-        num_results=5,
+        num_results=SEARCH_RESULTS_COUNT,
         include_domains=["https://x.com"],
         start_crawl_date=one_month_ago_as_str,
         category="tweet"
@@ -44,7 +45,7 @@ def exa_ai_tool(topic: str):
 
     linkedin_results = exa.search_and_contents(
         topic,
-        num_results=5,
+        num_results=SEARCH_RESULTS_COUNT,
         include_domains=["https://www.linkedin.com/"],
     )
 

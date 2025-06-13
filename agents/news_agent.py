@@ -16,6 +16,7 @@ from prompts.news_instruction_prompts import NEWS_API_AGENT_INSTRUCTION
 
 MODEL = "gemini-2.0-flash"
 newsapi = NewsApiClient(api_key=os.getenv('NEWS_API_KEY'))
+NEWS_SEARCH_RESULTS_COUNT = 4
 
 
 def fetch_full_article_text(url: str) -> str:
@@ -74,7 +75,7 @@ def news_api_tool(topic: str):
         q=topic,
         language="en",
         country="in",
-        page_size=2
+        page_size=NEWS_SEARCH_RESULTS_COUNT
     )
 
     all_news_result = newsapi.get_everything(
@@ -83,7 +84,7 @@ def news_api_tool(topic: str):
         to=datetime.datetime.now().strftime('%Y-%m-%d'),
         language="en",
         sort_by="popularity",
-        page_size=2,
+        page_size=NEWS_SEARCH_RESULTS_COUNT,
     )
 
     def process_articles(articles):
@@ -91,7 +92,7 @@ def news_api_tool(topic: str):
             if article.get('url'):
                 full_text = fetch_full_article_text(article['url'])
                 article['content'] = full_text  # Replace or add the content field
-                time.sleep(2) # Sleep to avoid hitting rate limits
+                time.sleep(2)  # Sleep to avoid hitting rate limits
         return articles
 
     res["top_headlines"] = process_articles(top_headline_news_result.get("articles", []))

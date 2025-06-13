@@ -107,10 +107,16 @@ class AnalysisWorkflow:
         }
 
         with st.spinner("Processing analysis workflow..."):
+            counter = 1
             async for event in runner_events:
                 if event.content and event.content.parts:
                     if event.is_final_response():
+                        tool_text = f"✅ {counter} Intermediate result processed"
+                        tool_calls.append(tool_text)
+                        if tool_calls_placeholder:
+                            tool_calls_placeholder.markdown("## 🤖 Analysis Progress\n" + "\n\n".join(tool_calls))
                         result.append(event.content.parts[0].text.strip())
+                        counter += 1
 
                     if event.get_function_calls():
                         for tool_call in event.get_function_calls():
@@ -162,6 +168,7 @@ class AnalysisWorkflow:
                                 if tool_calls_placeholder:
                                     tool_calls_placeholder.markdown(
                                         "## 🤖 Analysis Progress\n" + "\n\n".join(tool_calls))
+
 
         return result[-1]
 

@@ -28,7 +28,7 @@ def reddit_extractor_tool(topic: str, subreddits: str,  num_posts: int, num_comm
         topic (str): The topic to search for on Reddit.
         subreddits (str): A string of subreddits for getting the best conversations on the given topic to search
         num_posts (int): The number of top posts to retrieve for the topic. Use any value between 5 and 10.
-        num_comments (int): The number of comments to retrieve for each post. Use any value between 10 and 20.
+        num_comments (int): The number of comments to retrieve for each post. Use any value between 20 and 30.
     Returns:
         A list of dictionaries containing the extracted information. The dictionaries will include keys such as
         'title', 'text', 'score', 'subreddit', 'comments'.
