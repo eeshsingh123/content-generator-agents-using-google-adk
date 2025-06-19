@@ -130,35 +130,65 @@ class AnalysisWorkflow:
                     elif event.get_function_responses():
                         for tool_response in event.get_function_responses():
                             if tool_response.name == "image_generator_tool":
-                                image_dir = "generated_images"
-                                if os.path.exists(image_dir):
-                                    # Get latest generated image
-                                    latest_image = max(
-                                        [f for f in os.listdir(image_dir) if f.endswith(('.png', '.jpg', '.jpeg'))],
-                                        key=lambda x: os.path.getctime(os.path.join(image_dir, x)))
-                                    image_path = os.path.join(image_dir, latest_image)
-                                    tool_calls.append(f"🖼️ Generated visualization: `{latest_image}`")
+                                try:
+                                    image_dir = "generated_images"
+                                    if os.path.exists(image_dir):
+                                        # Get all image files in the directory
+                                        image_files = [f for f in os.listdir(image_dir) if f.endswith(('.png', '.jpg', '.jpeg'))]
+                                        
+                                        if image_files:
+                                            # Get latest generated image
+                                            latest_image = max(image_files, key=lambda x: os.path.getctime(os.path.join(image_dir, x)))
+                                            image_path = os.path.join(image_dir, latest_image)
+                                            
+                                            # Verify the image file actually exists and is accessible
+                                            if os.path.exists(image_path) and os.path.isfile(image_path):
+                                                tool_calls.append(f"🖼️ Generated visualization: `{latest_image}`")
 
+                                                if tool_calls_placeholder:
+                                                    tool_calls_placeholder.markdown(
+                                                        "## 🤖 Analysis Progress\n" + "\n\n".join(tool_calls))
+
+                                                    # Create/update image grid
+                                                    if 'generated_images' not in st.session_state:
+                                                        st.session_state.generated_images = []
+                                                    st.session_state.generated_images.append(image_path)
+
+                                                    # Display images in a 4-column grid
+                                                    image_placeholder = st.empty()
+                                                    with image_placeholder.container():
+                                                        for i in range(0, len(st.session_state.generated_images), 4):
+                                                            cols = st.columns(4)
+                                                            for j in range(4):
+                                                                if i + j < len(st.session_state.generated_images):
+                                                                    with cols[j]:
+                                                                        try:
+                                                                            st.image(st.session_state.generated_images[i + j],
+                                                                                     use_column_width=True,
+                                                                                     caption=f"Visual {i + j + 1}")
+                                                                        except Exception as img_error:
+                                                                            st.warning(f"Could not display image {i + j + 1}: {str(img_error)}")
+                                            else:
+                                                tool_calls.append(f"⚠️ Image generated but file not accessible")
+                                                if tool_calls_placeholder:
+                                                    tool_calls_placeholder.markdown(
+                                                        "## 🤖 Analysis Progress\n" + "\n\n".join(tool_calls))
+                                        else:
+                                            tool_calls.append(f"⚠️ Image generation completed but no files found")
+                                            if tool_calls_placeholder:
+                                                tool_calls_placeholder.markdown(
+                                                    "## 🤖 Analysis Progress\n" + "\n\n".join(tool_calls))
+                                    else:
+                                        tool_calls.append(f"⚠️ Image generation completed but directory not found")
+                                        if tool_calls_placeholder:
+                                            tool_calls_placeholder.markdown(
+                                                "## 🤖 Analysis Progress\n" + "\n\n".join(tool_calls))
+                                except Exception as e:
+                                    print(f"Error handling image generation: {str(e)}")
+                                    tool_calls.append(f"⚠️ Image generation had issues: {str(e)}")
                                     if tool_calls_placeholder:
                                         tool_calls_placeholder.markdown(
                                             "## 🤖 Analysis Progress\n" + "\n\n".join(tool_calls))
-
-                                        # Create/update image grid
-                                        if 'generated_images' not in st.session_state:
-                                            st.session_state.generated_images = []
-                                        st.session_state.generated_images.append(image_path)
-
-                                        # Display images in a 4-column grid
-                                        image_placeholder = st.empty()
-                                        with image_placeholder.container():
-                                            for i in range(0, len(st.session_state.generated_images), 4):
-                                                cols = st.columns(4)
-                                                for j in range(4):
-                                                    if i + j < len(st.session_state.generated_images):
-                                                        with cols[j]:
-                                                            st.image(st.session_state.generated_images[i + j],
-                                                                     use_column_width=True,
-                                                                     caption=f"Visual {i + j + 1}")
                             else:
                                 sources_found = 0
                                 if type(tool_response.response) is list:

@@ -1,5 +1,6 @@
 import os
 import datetime
+import re
 from PIL import Image
 
 from google import genai
@@ -36,12 +37,22 @@ def image_generator_tool(prompt: str):
         if part.text is not None:
             image_res["text"] = part.text
         elif part.inline_data is not None:
-            timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
-            root_dir_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "generated_images")
-            image_path = os.path.join(root_dir_path, f'image_{timestamp}_{prompt[:50]}.png')
+            try:
+                timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+                root_dir_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "generated_images")
+                
+                # Create directory if it doesn't exist
+                os.makedirs(root_dir_path, exist_ok=True)
+                
+                # Clean the prompt for filename (remove invalid characters)
+                clean_prompt = re.sub(r'[<>:"/\\|?*\n\r\t]', '_', prompt[:50]).strip()
+                image_path = os.path.join(root_dir_path, f'image_{timestamp}_{clean_prompt}.png')
 
-            Image.open(BytesIO(part.inline_data.data)).save(image_path)
-            image_res["image_path"] = image_path
+                Image.open(BytesIO(part.inline_data.data)).save(image_path)
+                image_res["image_path"] = image_path
+            except Exception as e:
+                print(f"Error saving image: {str(e)}")
+                image_res["error"] = f"Failed to save image: {str(e)}"
     return image_res
 
 
