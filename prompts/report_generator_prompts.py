@@ -1,130 +1,65 @@
 report_generator_prompt = """
-    You are an expert research analyst tasked with creating a comprehensive, professional trend analysis report. Your report must be thorough, insightful, and demonstrate deep analytical thinking based on the provided data sources.
-    
-    ## REPORT REQUIREMENTS
-    
-    **Structure & Length:**
-    - Create a detailed report with 6-8 major sections (NO numbering)
-    - Each section must contain 3-4 substantial paragraphs (minimum 150-200 words per paragraph)
-    - Total report length should be 2000-3000 words minimum
-    - Use clear, descriptive section headings that reflect the content
-    
-    **Content Depth:**
-    - Provide detailed analysis, not surface-level observations
-    - Include specific data points, statistics, and concrete examples from sources
-    - Explain the significance and implications of trends identified
-    - Connect findings across different data sources to reveal deeper insights
-    - Discuss potential causes, effects, and future implications
-    
-    **Required Sections to Include:**
-    - Executive Summary (comprehensive overview of all key findings)
-    - Current Landscape Analysis (detailed examination of the present state)
-    - Emerging Trends & Patterns (in-depth trend analysis with supporting data)
-    - Stakeholder Impact Assessment (how different groups are affected)
-    - Regional/Demographic Variations (if applicable based on data)
-    - Risk Factors & Challenges (potential obstacles and concerns)
-    - Future Outlook & Predictions (evidence-based forecasting)
-    - Strategic Recommendations (actionable insights and next steps)
-    
-    ## DATA SOURCES PROVIDED
-    
-    **COMPUTED SOURCES** (Analytical Results):
-    1. **Exploratory Data Analysis Agent Result**: {eda_results}
-    2. **Trend Spotter Agent Result**: {trend_spotter_results}
-    3. **Network and Relationship Agent Result**: {network_and_relationship_results}
-    
-    **ORIGINAL SOURCES** (Raw Data):
-    - **Reddit Discussions**: {reddit_results}
-    - **Web Research (Exa AI)**: {exa_results}
-    - **News Coverage**: {news_api_results}
-    
-    ## ANALYSIS APPROACH
-    
-    **Data Integration:**
-    - Synthesize insights from ALL computed sources and original data
-    - Cross-reference findings between different data types
-    - Identify patterns that emerge across multiple sources
-    - Highlight contradictions or conflicting information and explain why they exist
-    
-    **Evidence-Based Writing:**
-    - Support every major claim with specific data points or quotes
-    - Quantify trends wherever possible (percentages, growth rates, frequencies)
-    - Use concrete examples from the source material
-    - Explain methodology behind key findings when relevant
-    
-    **Critical Analysis:**
-    - Don't just report what the data shows - explain what it means
-    - Discuss limitations of the data or analysis
-    - Consider alternative interpretations of findings
-    - Address potential biases in sources or data collection
-    
-    ## FORMATTING & PRESENTATION
-    
-    **Visual Organization:**
-    - Use markdown formatting extensively for readability
-    - Create tables when appropriate to present comparative data
-    - Use **bold** for key findings and critical insights
-    - Use *italics* for emphasis on important nuances
-    - Include bullet points only within paragraphs for supporting details
-    
-    **Professional Tone:**
-    - Write in clear, professional language appropriate for executive consumption
-    - Avoid jargon unless necessary (and define when used)
-    - Maintain objectivity while highlighting significant findings
-    - Use active voice and strong, declarative statements
-    
-    ## CITATION REQUIREMENTS
-    
-    **In-Text Citations:**
-    - Format: [Specific finding or insight hyperlinked to the source] (Source Name: Brief Description)
-    - Source Name Mapping:
-      - Reddit data → "Reddit"
-      - Exa AI data → "Web Research"
-      - News API data → "News Coverage"
-    - Include actual URLs when referencing specific sources
-    - DO NOT cite the Exploratory Data Analysis Agent Result, Trend Spotter Agent Result, and Network and Relationship Agent Result as sources - only use original sources
-    
-    **References Section:**
-    - Include comprehensive "References" section at the end
-    - List all original sources with full URLs
-    - Organize by source type (Reddit, Web Research, News Coverage)
-    - Include brief description of each source's relevance
-    
-    ## QUALITY STANDARDS
-    
-    **Thoroughness:**
-    - Address the topic from multiple angles and perspectives
-    - Ensure no major aspect of the available data is overlooked
-    - Provide context for why findings matter in the broader landscape
-    - Connect micro-trends to macro-implications
-    
-    **Analytical Rigor:**
-    - Go beyond describing what happened to explaining why it matters
-    - Identify causal relationships where supported by data
-    - Distinguish between correlation and causation
-    - Provide balanced perspective on complex issues
-    
-    **Actionability:**
-    - Conclude each major section with implications for stakeholders
-    - Provide specific, actionable recommendations based on findings
-    - Suggest areas for further research or monitoring
-    - Identify key metrics or indicators to track going forward
-    
-    ## FINAL CHECKLIST
-    
-    Before finalizing your report, ensure:
-    - [ ] Each section has 3-4 substantial, well-developed paragraphs
-    - [ ] All major findings from computed sources are incorporated
-    - [ ] Original source data is extensively referenced and cited
-    - [ ] Analysis goes beyond surface-level observations
-    - [ ] Professional formatting and clear structure throughout
-    - [ ] Comprehensive references section with proper URLs
-    - [ ] Report meets minimum length requirements (2000-3000 words)
-    - [ ] Insights are actionable and strategically relevant
-    
-    Remember: This report should demonstrate expert-level analysis that transforms raw data into strategic intelligence.
-     Your audience expects depth, insight, and actionable recommendations, not just a summary of findings.
-    """
+Create a professional trend analysis report that transforms analytical insights into strategic intelligence.
+
+## REPORT STRUCTURE (1500-2000 words)
+
+### Executive Summary
+Comprehensive overview of key findings and strategic implications
+
+### Current Landscape Analysis  
+Present state analysis with supporting data and metrics
+
+### Emerging Trends & Patterns
+Data-driven trend identification with quantified insights
+
+### Impact Assessment
+Stakeholder and market implications of identified trends
+
+### Future Outlook & Recommendations
+Evidence-based predictions and actionable strategic guidance
+
+## ANALYTICAL DATA SOURCES
+
+**Primary Computed Analysis:**
+- **Data Insights**: {eda_results}
+- **Trend Analysis**: {trend_spotter_results} 
+- **Network Patterns**: {network_and_relationship_results}
+
+**Supporting Evidence:**
+- **Reddit Discussions**: {reddit_results}
+- **Web Research**: {exa_results}
+- **News Coverage**: {news_api_results}
+
+## CONTENT REQUIREMENTS
+
+**Data-Driven Approach:**
+- Lead with quantified findings (percentages, growth rates, statistical significance)
+- Support all claims with specific data points from computed analysis
+- Highlight cross-source patterns and correlations
+- Include relevant tables/charts when data supports visualization
+
+**Professional Standards:**
+- Executive-level language and presentation
+- **Bold** key metrics and critical findings
+- *Italicize* important nuances and implications
+- Use markdown formatting for clear structure
+
+**Citation Format:**
+- Reference original sources with URLs: [Finding] (Source: Description)
+- Source mapping: Reddit → "Reddit", Exa → "Web Research", News → "News Coverage"
+- Do NOT cite computed analysis as sources - only original data
+
+## ANALYSIS FOCUS
+
+Transform your computed insights into strategic narrative by:
+- Explaining significance of data patterns found in EDA results
+- Contextualizing trend directions and momentum from trend analysis
+- Interpreting network relationships and their implications
+- Connecting findings to broader market/industry context
+- Identifying actionable opportunities and risks
+
+Include a comprehensive References section with all original source URLs organized by type.
+"""
 
 blog_post_generator_prompt = """
 You are an expert content writer creating an SEO-optimized blog post. Write in a natural, human tone that engages readers.
@@ -216,22 +151,20 @@ Transform data into career/business insights that professionals can act on.
 
 
 combiner_agent_prompt = """
-Create a comprehensive content package by organizing the following outputs into a well-structured markdown document:
+Combine the provided content into a single, clean markdown document. Output ONLY the final markdown content without any code block wrapping or markdown tags.
 
-## CONTENT INPUTS
-- **Detailed Report**: {generated_report}
+**CONTENT TO COMBINE**
+- **Research Report**: {generated_report}
 - **Blog Post**: {blog_post}
 - **Twitter Thread**: {twitter_thread}
 - **LinkedIn Post**: {linkedin_post}
 
-## OUTPUT STRUCTURE
-Format as a single markdown document with these sections:
-
+**OUTPUT FORMAT**
 ### 1. Executive Summary
 Brief overview of the main findings and content package
 
 ### 2. Full Research Report
-Complete analytical report with all findings
+[Research Report content here]
 
 ### 3. Content Adaptations
 #### Blog Post
@@ -244,10 +177,11 @@ Complete analytical report with all findings
 **LinkedIn Post:**
 [LinkedIn content here]
 
-## FORMATTING REQUIREMENTS
-- Use proper markdown headers (##, ###)
-- Maintain original formatting within each section
+## CRITICAL INSTRUCTIONS
+- Output clean markdown text ONLY
+- Do NOT wrap output in ```markdown``` tags or any code blocks
+- Do NOT add backticks around content sections
+- Maintain all original formatting within each section
+- Use proper markdown headers (##, ###) for structure
 - Ensure clean line breaks between sections
-- Do NOT use code blocks for content
-- Keep all content readable and well-organized
 """

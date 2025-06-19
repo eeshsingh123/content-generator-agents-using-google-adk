@@ -115,6 +115,10 @@ class AnalysisWorkflow:
                         tool_calls.append(tool_text)
                         if tool_calls_placeholder:
                             tool_calls_placeholder.markdown("## 🤖 Analysis Progress\n" + "\n\n".join(tool_calls))
+                        print("\n--------------------------------\n")
+                        print("INTERMEDIATE RESULT")
+                        print(event.content.parts[0].text.strip())
+                        print("\n--------------------------------\n")
                         result.append(event.content.parts[0].text.strip())
                         counter += 1
 
@@ -170,6 +174,10 @@ class AnalysisWorkflow:
                                         "## 🤖 Analysis Progress\n" + "\n\n".join(tool_calls))
 
 
+        print("\n--------------------------------\n")
+        print("FINAL RESULT")
+        print(result[-1])
+        print("\n--------------------------------\n")
         return result[-1]
 
 
