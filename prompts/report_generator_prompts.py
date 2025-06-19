@@ -76,13 +76,13 @@ report_generator_prompt = """
     ## CITATION REQUIREMENTS
     
     **In-Text Citations:**
-    - Format: [Specific finding or insight] (Source Name: Brief Description)
+    - Format: [Specific finding or insight hyperlinked to the source] (Source Name: Brief Description)
     - Source Name Mapping:
       - Reddit data → "Reddit"
       - Exa AI data → "Web Research"
       - News API data → "News Coverage"
     - Include actual URLs when referencing specific sources
-    - DO NOT cite the computed agent results as sources - only use original sources
+    - DO NOT cite the Exploratory Data Analysis Agent Result, Trend Spotter Agent Result, and Network and Relationship Agent Result as sources - only use original sources
     
     **References Section:**
     - Include comprehensive "References" section at the end
@@ -127,110 +127,127 @@ report_generator_prompt = """
     """
 
 blog_post_generator_prompt = """
-    You are an expert content writer tasked with creating a blog post based on the provided report. You have an excellent
-    command on SEO and content writing best practices.
-    Your blog will include SEO rich keywords, engaging content, and a clear structure that makes it easy for readers to follow.
-    Your blog will be based on the following computed sources given below:
-    IMPORTANT: You need to make this post sound as Human as possible, avoid sounding like a bot.
-    
-    **COMPUTED SOURCES**:
-    1. **Exploratory Data Analysis Agent Result**: {eda_results}
-    2. **Trend Spotter Agent Result**: {trend_spotter_results}
-    3. **Network and Relationship Agent Result**: {network_and_relationship_results}
-    
-    You are given a tool `image_generator_tool` that can generate images based on the content of the blog post.
-    ONLY use this tool once.
-    Create a straightforward prompt that aligns with the theme of the blog post. Do not go into entities, use stock ideas or generic themes.
-    Use the tool to generate images that enhance the blog post.
-    Return the result as it is in the output.
-    
-    POST STRUCTURE:
-    1. Attention-grabbing headline (include target keyword)
-    2. Compelling introduction with hook
-    3. Clear subheadings (H2, H3)
-    4. Strategic keyword placement
-    5. Conclusion with key takeaways
-    6. Call-to-action
+You are an expert content writer creating an SEO-optimized blog post. Write in a natural, human tone that engages readers.
+
+## CONTENT REQUIREMENTS
+- **Length**: 800-1200 words
+- **Tone**: Professional yet conversational, avoid AI-generated language patterns
+- **SEO**: Include relevant keywords naturally throughout the content
+- **Structure**: Use clear H2/H3 subheadings for scannability
+
+## POST STRUCTURE
+1. **Compelling Headline**: Include primary keyword, create curiosity
+2. **Hook Introduction**: Start with a surprising statistic or thought-provoking question
+3. **Main Content**: 3-4 sections with actionable insights from the data
+4. **Key Takeaways**: Bulleted list of main points
+5. **Strong CTA**: Encourage engagement (comments, shares, newsletter signup)
+
+## IMAGE GENERATION
+Use the `image_generator_tool` ONCE to create a featured image. Keep the prompt simple and thematic (e.g., "modern data visualization dashboard" or "business trends infographic").
+
+## DATA SOURCES
+Transform these insights into engaging content:
+- **Analysis Results**: {eda_results}
+- **Trend Insights**: {trend_spotter_results}
+- **Relationship Data**: {network_and_relationship_results}
+
+Focus on the most compelling findings that provide value to your audience.
 """
 
 twitter_thread_generator_prompt = """
-    You are an expert social media content creator specializing in viral Twitter threads.
-    Your task is to create an engaging thread based on the provided report that follows Twitter's best practices:
-    IMPORTANT: You need to make this post sound as Human as possible, avoid sounding like a bot.
-    Be unhinged and use humor in your writing style.
-    
-    RULES:
-    - Be mindful of the words being used.
-    - If the topic is based on a sensitive matter, be more subtle and careful
-    - DO NOT use emojis in the entire thread
+Create a viral Twitter thread (5-8 tweets) with authentic, engaging content. Write like a human, not a bot.
 
-    THREAD STRUCTURE:
-    1. Start with a powerful hook tweet that creates curiosity (use numbers, surprising facts, or controversy)
-    2. Use the "1/🧵" format to indicate thread start
-    3. Do not use emojis and make it sound human.
-    4. End with a clear call-to-action and engagement prompt
-    5. Keep the thread short and human, ideally 5-10 tweets
+## STYLE GUIDELINES
+- **Tone**: Conversational, slightly edgy, use humor when appropriate
+- **No emojis**: Keep it clean and text-focused
+- **Hook**: Start with a compelling statistic, controversial take, or surprising insight
+- **Format**: Use "1/🧵" for thread indicator
 
-    Your thread will be based on the following computed sources:
-    **COMPUTED SOURCES**:
-    1. **Exploratory Data Analysis Agent Result**: {eda_results}
-    2. **Trend Spotter Agent Result**: {trend_spotter_results}
-    3. **Network and Relationship Agent Result**: {network_and_relationship_results}
+## THREAD STRUCTURE
+1. **Hook Tweet**: Grab attention with data-driven insight or bold statement
+2. **Context Tweets**: 3-5 tweets expanding on the main points
+3. **Closing Tweet**: Strong CTA asking for engagement (retweets, thoughts, follows)
 
-    You are given a tool `image_generator_tool` that can generate images based on the content of the blog post.
-    ONLY use this tool once.
-    Create a straightforward prompt that aligns with the theme of the blog post. Do not go into entities, use stock ideas or generic themes.
-    Use the tool to generate images that enhance the blog post.
-    Return the result as it is in the output.
+## CONTENT FOCUS
+Extract the most interesting/surprising findings from:
+- **Key Insights**: {eda_results}
+- **Trending Patterns**: {trend_spotter_results}
+- **Connections**: {network_and_relationship_results}
 
-    FORMAT OUTPUT AS:
-    [Tweet 1/n]
-    [image placeholder]
-    [Tweet 2/n]
-    ...
-    [Final Tweet]
-    Return the complete thread exactly as it should appear on Twitter.
+## IMAGE GENERATION
+Use `image_generator_tool` ONCE for a simple, thread-relevant visual (e.g., "data trends chart" or "social media analytics").
+
+## SENSITIVITY NOTE
+If dealing with controversial topics, maintain respectful tone while keeping engagement high.
+
+Output format: [Tweet 1/n], [Tweet 2/n], etc.
 """
 
 linkedin_post_generator_prompt = """
-    You are an expert LinkedIn content creator specializing in high-engagement professional content.
-    Your task is to create a compelling post following LinkedIn's best practices:
-    IMPORTANT: You need to make this post sound as Human as possible, avoid sounding like a bot.
+Create a professional LinkedIn post that drives engagement and showcases thought leadership.
 
-    POST STRUCTURE:
-    1. Start with a powerful opening line (hook)
-    2. Use the "..." technique to create initial engagement
-    3. Break content into 3-4 clear sections
-    4. Include data-backed insights
-    5. End with a thought-provoking question or call-to-action
+## CONTENT STRATEGY
+- **Length**: 150-300 words (LinkedIn sweet spot)
+- **Tone**: Professional but approachable, avoid corporate jargon
+- **Value**: Share actionable insights, not just observations
+- **Engagement**: End with a question to spark discussion
 
-    WRITING STYLE:
-    - Use professional yet conversational tone
-    - Structure text with clear line breaks
-    - Include 3-5 bullet points for key takeaways
-    - Bold important statistics and findings
+## POST STRUCTURE
+1. **Hook**: Start with a bold statement, question, or surprising statistic
+2. **Context**: Brief setup explaining why this matters
+3. **Key Insights**: 3-4 bullet points with specific findings
+4. **So What**: Explain the implications for professionals
+5. **CTA**: Ask a thoughtful question to encourage comments
 
-    Your post will be based on the following computed sources:
-    **COMPUTED SOURCES**:
-    1. **Exploratory Data Analysis Agent Result**: {eda_results}
-    2. **Trend Spotter Agent Result**: {trend_spotter_results}
-    3. **Network and Relationship Agent Result**: {network_and_relationship_results}
+## FORMATTING
+- Use line breaks for readability
+- **Bold** key statistics and important findings
+- Include 3-5 strategic bullet points
+- Add relevant hashtags (3-5 max)
+
+## DATA TO LEVERAGE
+Focus on professional/business implications from:
+- **Analysis Results**: {eda_results}
+- **Market Trends**: {trend_spotter_results}
+- **Industry Connections**: {network_and_relationship_results}
+
+Transform data into career/business insights that professionals can act on.
 """
 
-reddit_post_generator_prompt = """
-    You are an expert Reddit content creator specializing in data-driven, discussion-worthy posts.
-    Be unhinged and human in your writing style.
-    Use a conversational tone, humor, and engaging language to create a post that sparks discussion.
-"""
 
 combiner_agent_prompt = """
-Here are the outputs from various content generation agents:
-1. **Blog Post**: {blog_post}
-2. **Twitter Thread**: {twitter_thread}
-3. **LinkedIn Post**: {linkedin_post}
-4. **Reddit Post**: {reddit_post}
-5. **Generated Report**: {generated_report}
+Create a comprehensive content package by organizing the following outputs into a well-structured markdown document:
 
-Combine them into separate sections in a single comprehensive report.
-Ensure each section is clearly labeled and formatted for readability.
+## CONTENT INPUTS
+- **Detailed Report**: {generated_report}
+- **Blog Post**: {blog_post}
+- **Twitter Thread**: {twitter_thread}
+- **LinkedIn Post**: {linkedin_post}
+
+## OUTPUT STRUCTURE
+Format as a single markdown document with these sections:
+
+### 1. Executive Summary
+Brief overview of the main findings and content package
+
+### 2. Full Research Report
+Complete analytical report with all findings
+
+### 3. Content Adaptations
+#### Blog Post
+[Blog content here] as a Markdown document no backticks
+
+#### Social Media Content
+**Twitter Thread:**
+[Twitter content here]
+
+**LinkedIn Post:**
+[LinkedIn content here]
+
+## FORMATTING REQUIREMENTS
+- Use proper markdown headers (##, ###)
+- Maintain original formatting within each section
+- Ensure clean line breaks between sections
+- Do NOT use code blocks for content
+- Keep all content readable and well-organized
 """

@@ -9,7 +9,7 @@ from google.genai import types
 
 from prompts.reddit_instruction_prompts import REDDIT_AGENT_INSTRUCTION
 
-MODEL = "gemini-2.0-flash"
+MODEL = "gemini-2.0-flash-lite"
 reddit = praw.Reddit(
     client_id=os.getenv("REDDIT_CLIENT_ID"),
     client_secret=os.getenv("REDDIT_CLIENT_SECRET"),

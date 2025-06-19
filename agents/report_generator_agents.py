@@ -10,11 +10,9 @@ from google.adk.agents import LlmAgent
 
 from prompts.report_generator_prompts import (report_generator_prompt,
                                               combiner_agent_prompt, blog_post_generator_prompt,
-                                              twitter_thread_generator_prompt, linkedin_post_generator_prompt,
-                                              reddit_post_generator_prompt)
+                                              twitter_thread_generator_prompt, linkedin_post_generator_prompt)
 
 MODEL = "gemini-2.0-flash"
-
 
 # Tools
 def image_generator_tool(prompt: str):
@@ -39,8 +37,8 @@ def image_generator_tool(prompt: str):
             image_res["text"] = part.text
         elif part.inline_data is not None:
             timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
-            root_dir_path = "C:\\Projects\\GoogleADKHackathon\\generated_images"
-            image_path = f'{root_dir_path}\\image_{timestamp}_{prompt[:50]}.png'
+            root_dir_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "generated_images")
+            image_path = os.path.join(root_dir_path, f'image_{timestamp}_{prompt[:50]}.png')
 
             Image.open(BytesIO(part.inline_data.data)).save(image_path)
             image_res["image_path"] = image_path
@@ -80,14 +78,6 @@ linkedin_post_generator_agent = LlmAgent(
     instruction=linkedin_post_generator_prompt,
     description="An agent designed to generate a LinkedIn post summarizing the key findings from the report.",
     output_key="linkedin_post",
-)
-
-reddit_post_generator_agent = LlmAgent(
-    name="reddit_post_generator_agent",
-    model=MODEL,
-    instruction=reddit_post_generator_prompt,
-    description="An agent designed to generate a Reddit post summarizing the key findings from the report.",
-    output_key="reddit_post",
 )
 
 combiner_agent = LlmAgent(

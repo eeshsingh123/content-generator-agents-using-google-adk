@@ -14,7 +14,7 @@ from google.genai import types
 
 from prompts.news_instruction_prompts import NEWS_API_AGENT_INSTRUCTION
 
-MODEL = "gemini-2.0-flash"
+MODEL = "gemini-2.0-flash-lite"
 newsapi = NewsApiClient(api_key=os.getenv('NEWS_API_KEY'))
 NEWS_SEARCH_RESULTS_COUNT = 4
 

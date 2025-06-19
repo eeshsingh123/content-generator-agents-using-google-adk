@@ -17,7 +17,7 @@ from agents.eda_agents import eda_agent, trend_spotter_agent, network_and_relati
 from agents.exa_agent import exa_agent
 from agents.reddit_agent import reddit_agent
 from agents.news_agent import news_agent
-from agents.report_generator_agents import (report_generator_agent, reddit_post_generator_agent,
+from agents.report_generator_agents import (report_generator_agent,
                                             blog_post_generator_agent, twitter_thread_generator_agent,
                                             linkedin_post_generator_agent)
 
@@ -77,7 +77,7 @@ class AnalysisWorkflow:
             name="ReportGeneratorAgents",
             sub_agents=[
                 report_generator_agent, blog_post_generator_agent, twitter_thread_generator_agent,
-                linkedin_post_generator_agent, reddit_post_generator_agent
+                linkedin_post_generator_agent
             ],
             description="Generates a comprehensive report based on the analysis results."
         )
@@ -199,7 +199,6 @@ def main():
         #### 📱 Auto-Generated Content For:
         - 🔵 LinkedIn - Professional insights
         - 🐦 Twitter - Viral thread creation
-        - 🎯 Reddit - Community discussions
         - 📝 Blog Posts - Detailed articles
         """)
 

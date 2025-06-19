@@ -10,7 +10,7 @@ from google.genai import types
 
 from prompts.exa_instruction_prompts import EXA_AGENT_INSTRUCTION
 
-MODEL = "gemini-2.0-flash"
+MODEL = "gemini-2.0-flash-lite"
 exa = Exa(os.getenv('EXA_API_KEY'))
 SEARCH_RESULTS_COUNT = 10
 
