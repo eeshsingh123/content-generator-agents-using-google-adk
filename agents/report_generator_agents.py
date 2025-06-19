@@ -86,3 +86,49 @@ combiner_agent = LlmAgent(
     instruction=combiner_agent_prompt,
     description="An agent designed to combine various content formats into a comprehensive report.",
 )
+
+def create_report_generator_agents():
+    fresh_report_generator_agent = LlmAgent(
+        name="report_generator_agent",
+        model=MODEL,
+        instruction=report_generator_prompt,
+        description="An agent designed to generate comprehensive reports based on data analysis and insights.",
+        output_key="generated_report",
+    )
+
+    fresh_blog_post_generator_agent = LlmAgent(
+        name="blog_post_generator_agent",
+        model=MODEL,
+        instruction=blog_post_generator_prompt,
+        description="An agent designed to generate a blog post summarizing the key findings from the report.",
+        output_key="blog_post",
+        tools=[image_generator_tool]
+    )
+
+    fresh_twitter_thread_generator_agent = LlmAgent(
+        name="twitter_thread_generator_agent",
+        model=MODEL,
+        instruction=twitter_thread_generator_prompt,
+        description="An agent designed to generate a Twitter thread summarizing the key findings from the report.",
+        tools=[image_generator_tool],
+        output_key="twitter_thread",
+    )
+
+    fresh_linkedin_post_generator_agent = LlmAgent(
+        name="linkedin_post_generator_agent",
+        model=MODEL,
+        instruction=linkedin_post_generator_prompt,
+        description="An agent designed to generate a LinkedIn post summarizing the key findings from the report.",
+        output_key="linkedin_post",
+    )
+    
+    return [fresh_report_generator_agent, fresh_blog_post_generator_agent, 
+            fresh_twitter_thread_generator_agent, fresh_linkedin_post_generator_agent]
+
+def create_combiner_agent():
+    return LlmAgent(
+        name="combiner_agent",
+        model=MODEL,
+        instruction=combiner_agent_prompt,
+        description="An agent designed to combine various content formats into a comprehensive report.",
+    )

@@ -108,6 +108,15 @@ news_agent = LlmAgent(
     output_key="news_api_results",
 )
 
+def create_news_agent():
+    return LlmAgent(
+        name="news_agent",
+        model=MODEL,
+        instruction=NEWS_API_AGENT_INSTRUCTION,
+        tools=[news_api_tool],
+        output_key="news_api_results",
+    )
+
 
 async def run_news_api_agent(topic: str):
     session_service = InMemorySessionService()

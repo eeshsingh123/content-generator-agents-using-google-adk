@@ -64,6 +64,16 @@ exa_agent = LlmAgent(
     output_key="exa_results",
 )
 
+def create_exa_agent():
+    return LlmAgent(
+        name="exa_agent",
+        model=MODEL,
+        description="An agent designed to extract web results from Exa AI API for a given topic.",
+        instruction=EXA_AGENT_INSTRUCTION,
+        tools=[exa_ai_tool],
+        output_key="exa_results",
+    )
+
 
 async def run_exa_agent(topic: str):
     session_service = InMemorySessionService()

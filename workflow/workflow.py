@@ -13,15 +13,11 @@ from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.genai import types
 
-from agents.eda_agents import eda_agent, trend_spotter_agent, network_and_relationship_agent
-from agents.exa_agent import exa_agent
-from agents.reddit_agent import reddit_agent
-from agents.news_agent import news_agent
-from agents.report_generator_agents import (report_generator_agent,
-                                            blog_post_generator_agent, twitter_thread_generator_agent,
-                                            linkedin_post_generator_agent)
-
-from agents.report_generator_agents import combiner_agent
+from agents.eda_agents import create_eda_agents
+from agents.exa_agent import create_exa_agent
+from agents.reddit_agent import create_reddit_agent
+from agents.news_agent import create_news_agent
+from agents.report_generator_agents import create_report_generator_agents, create_combiner_agent
 
 
 class AnalysisWorkflow:
@@ -56,7 +52,13 @@ class AnalysisWorkflow:
         result = []
         tool_calls = []
 
-        # Agent configuration remains the same...
+        exa_agent = create_exa_agent()
+        reddit_agent = create_reddit_agent()
+        news_agent = create_news_agent()
+        eda_agent, trend_spotter_agent, network_agent = create_eda_agents()
+        report_agents = create_report_generator_agents()
+        combiner_agent = create_combiner_agent()
+
         information_gathering_agents = ParallelAgent(
             name="InformationGatheringAgents",
             sub_agents=[exa_agent, reddit_agent, news_agent],
@@ -68,17 +70,14 @@ class AnalysisWorkflow:
             sub_agents=[
                 eda_agent,
                 trend_spotter_agent,
-                network_and_relationship_agent
+                network_agent
             ],
             description="Runs sequentially to analyze the topic and gather insights."
         )
 
         result_creator_agents = ParallelAgent(
             name="ReportGeneratorAgents",
-            sub_agents=[
-                report_generator_agent, blog_post_generator_agent, twitter_thread_generator_agent,
-                linkedin_post_generator_agent
-            ],
+            sub_agents=report_agents,
             description="Generates a comprehensive report based on the analysis results."
         )
 

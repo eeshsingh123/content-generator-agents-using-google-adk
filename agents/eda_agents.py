@@ -28,3 +28,30 @@ network_and_relationship_agent = LlmAgent(
     description="An agent designed to analyze relationships and networks within data.",
     output_key="network_and_relationship_results",
 )
+
+def create_eda_agents():
+    fresh_eda_agent = LlmAgent(
+        name="exploratory_data_analysis_agent",
+        model=SUPERIOR_MODEL,
+        instruction=eda_prompt,
+        description="An agent designed to perform exploratory data analysis (EDA) on a given dataset.",
+        output_key="eda_results",
+    )
+    
+    fresh_trend_spotter_agent = LlmAgent(
+        name="trend_spotter_agent",
+        model=SUPERIOR_MODEL,
+        instruction=trend_spotting_prompt,
+        description="An agent designed to identify trends and patterns in data from multiple sources.",
+        output_key="trend_spotter_results",
+    )
+    
+    fresh_network_and_relationship_agent = LlmAgent(
+        name="network_and_relationship_agent",
+        model=SUPERIOR_MODEL,
+        instruction=network_and_relationship_prompt,
+        description="An agent designed to analyze relationships and networks within data.",
+        output_key="network_and_relationship_results",
+    )
+    
+    return fresh_eda_agent, fresh_trend_spotter_agent, fresh_network_and_relationship_agent

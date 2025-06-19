@@ -81,6 +81,17 @@ reddit_agent = LlmAgent(
     output_key="reddit_results",
 )
 
+def create_reddit_agent():
+    return LlmAgent(
+        name="reddit_agent",
+        model=MODEL,
+        description="""This agent is designed to interact with Reddit, explore subreddits, and provide insights
+         for a given topic.""",
+        instruction=REDDIT_AGENT_INSTRUCTION,
+        tools=[reddit_extractor_tool],
+        output_key="reddit_results",
+    )
+
 print("Reddit agent initialized successfully.")
 
 
